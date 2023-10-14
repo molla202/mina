@@ -43,7 +43,10 @@ nano ~/keys/my-wallet.pub
 
 
 
-Not: Yeni cüzdanınızın şifresini, çıkardığınız topluluk-216-password.txt dosyasında bulabilirsiniz. bu şifreyi altaki `MINA_PRIVKEY_PASS="şifre"` yazan yere yazıcanız. ctrl x y enterla kaydet altaki kodlada üzerine yaz demeden şifresinide `MINA_LIBP2P_PASS="şifre"` buraya yazıcaksınız. UPTIME_PRIVKEY_PASS="şifre" buraya burda yazdığın şifreyi yazınız MINA_PRIVKEY_PASS="şifre" , --external-ip ipniziyazınız  buraya sunucu ipnizi yazınız
+Not: Yeni cüzdanınızın şifresini, çıkardığınız topluluk-216-password.txt dosyasında bulabilirsiniz. bu şifreyi altaki `MINA_PRIVKEY_PASS="şifre"` yazan yere yazıcanız. ctrl x y enterla kaydet
+* altaki kodlada olusturduğunuz şifreyi `MINA_LIBP2P_PASS="şifre"` buraya yazıcaksınız.
+* UPTIME_PRIVKEY_PASS="şifre" buraya,  burda yazdığın şifreyi yazınız MINA_PRIVKEY_PASS="şifre"
+* --external-ip `ipniziyazınız`  buraya sunucu ipnizi yazınız
 ```
 mina libp2p generate-keypair -privkey-path /root/keys/keys
 ```
