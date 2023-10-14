@@ -4,7 +4,7 @@ NOT: Docker tavsiye ediliyor. dokumanı komple okuyunuz sonra başlayınız. ça
 ```
 sudo apt-get update && sudo apt install jq git && sudo apt install apt-transport-https ca-certificates curl software-properties-common -y && curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add - && sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu focal stable" && sudo apt-get install docker-ce docker-ce-cli containerd.io docker-compose-plugin && sudo apt-get install docker-compose-plugin
 ```
-### Mina daemon
+### Mina
 ```
 sudo rm /etc/apt/sources.list.d/mina*.list
 echo "deb [trusted=yes] http://packages.o1test.net/ focal rampup" | sudo tee /etc/apt/sources.list.d/mina-rampup.list
@@ -41,64 +41,65 @@ nano ~/keys/my-wallet.pub
 ```
 ### Çalıştırma manuel
 
-```
-mina daemon --peer-list-url https://storage.googleapis.com/seed-lists/testworld-2-0_seeds.txt \
-            --block-producer-key ~/keys/my-wallet
-```
 
---------------------
 
-### DOCKER
-```
-docker pull gcr.io/o1labs-192920/mina-daemon:2.0.0rampup5-55b7818-focal-berkeley
-```
-```
-cd ~
-chmod 700 /root/keys
-chmod 600 /root/keys/my-wallet
-mkdir /root/.mina-config
-nano /root/.mina-env
-```
-
-Not: Yeni cüzdanınızın şifresini, çıkardığınız topluluk-216-password.txt dosyasında bulabilirsiniz. bu şifreyi altaki `MINA_PRIVKEY_PASS="şifre"` yazan yere yazıcanız. ctrl x y enterla kaydet altaki kodlada üzerine yaz demeden şifresinide `MINA_LIBP2P_PASS="şifre"` buraya yazıcaksınız.
+Not: Yeni cüzdanınızın şifresini, çıkardığınız topluluk-216-password.txt dosyasında bulabilirsiniz. bu şifreyi altaki `MINA_PRIVKEY_PASS="şifre"` yazan yere yazıcanız. ctrl x y enterla kaydet altaki kodlada üzerine yaz demeden şifresinide `MINA_LIBP2P_PASS="şifre"` buraya yazıcaksınız. UPTIME_PRIVKEY_PASS="şifre" buraya burda yazdığın şifreyi yazınız MINA_PRIVKEY_PASS="şifre" , --external-ip ipniziyazınız  buraya sunucu ipnizi yazınız
 ```
 mina libp2p generate-keypair -privkey-path /root/keys/keys
 ```
 ---------------
 ```
-export MINA_PRIVKEY_PASS="şifre"
+nano ~/.mina-env
+```
+```
+MINA_PRIVKEY_PASS="şifre"
+UPTIME_PRIVKEY_PASS="şifre"
 LOG_LEVEL=Info
 FILE_LOG_LEVEL=Debug
-EXTRA_FLAGS=" --block-producer-key /root/keys/my-wallet --libp2p-keypair /root/keys/keys"
+EXTRA_FLAGS="--log-json --log-snark-work-gossip true --internal-tracing --insecure-rest-server --log-level Debug --file-log-level Debug --config-directory /root/.mina-config/ --external-ip ipniziyazınız --itn-keys  f1F38+W3zLcc45fGZcAf9gsZ7o9Rh3ckqZQw6yOJiS4=,6GmWmMYv5oPwQd2xr6YArmU1YXYCAxQAxKH7aYnBdrk=,ZJDkF9EZlhcAU1jyvP3m9GbkhfYa0yPV+UdAqSamr1Q=,NW2Vis7S5G1B9g2l9cKh3shy9qkI1lvhid38763vZDU=,Cg/8l+JleVH8yNwXkoLawbfLHD93Do4KbttyBS7m9hQ= --itn-graphql-port 3089 --uptime-submitter-key  /root/keys/my-wallet --uptime-url https://block-producers-uptime-itn.minaprotocol.tools/v1/submit --metrics-port 10001 --enable-peer-exchange  true --libp2p-keypair /root/keys/keys --log-precomputed-blocks true --max-connections 200 --peer-list-url  https://storage.googleapis.com/seed-lists/testworld-2-0_seeds.txt --generate-genesis-proof  true --block-producer-key /root/keys/my-wallet --node-status-url https://nodestats-itn.minaprotocol.tools/submit/stats  --node-error-url https://nodestats-itn.minaprotocol.tools/submit/stats  --file-log-rotations 500"
 PEER_LIST_URL=https://storage.googleapis.com/seed-lists/testworld-2-0_seeds.txt
 RAYON_NUM_THREADS=6
 MINA_LIBP2P_PASS="şifre"
 ```
-----------
-
-```
-cd
-```
-```
-mina libp2p generate-keypair -privkey-path /root/keys/keys
-```
-```
-docker run --name mina -d \
--p 8302:8302 \
---restart=always \
---mount "type=bind,source=$(pwd)/.mina-env,dst=/entrypoint.d/mina-env,readonly" \
---mount "type=bind,source=$(pwd)/keys,dst=/keys,readonly" \
---mount "type=bind,source=$(pwd)/.mina-config,dst=/root/.mina-config" \
-minaprotocol/mina-daemon:2.0.0rampup5-55b7818-focal-berkeley \
-daemon
-```
 
 
 ```
-docker logs -f mina
+sudo tee /usr/lib/systemd/user/mina.service > /dev/null <<EOF
+[Unit]
+Description=Mina Daemon Service
+After=network.target
+StartLimitIntervalSec=60
+StartLimitBurst=3
+
+
+[Service]
+Environment="PEERS_LIST_URL=https://storage.googleapis.com/seed-lists/berkeley_seeds.txt"
+Environment="LOG_LEVEL=Info"
+Environment="FILE_LOG_LEVEL=Debug"
+EnvironmentFile=%h/.mina-env
+Type=simple
+Restart=always
+RestartSec=30
+ExecStart=/usr/local/bin/mina daemon \
+  $EXTRA_FLAGS
+ExecStop=/usr/local/bin/mina client stop-daemon
+
+[Install]
+WantedBy=default.target
+EOF
 ```
 ```
-docker exec -it mina mina client status
+chmod 600 ~/.mina-env
+systemctl --user daemon-reload
+systemctl --user restart mina
+systemctl --user enable mina
+sudo loginctl enable-linger
+journalctl --user-unit mina -n 1000 -f
+```
+
+Not: az bekle sona bu cıktı vericek
+```
+mina client status
 ```
 
 
