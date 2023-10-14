@@ -13,7 +13,7 @@ sudo apt-get install -y mina-berkeley=2.0.0rampup5-55b7818
 
 
 
-* gelen zipli dosyayı mailden pcye indirin ve açın 216_ZaGpcRDs9gGYTExUNwu.zip
+* gelen zipli dosyayı mailden pcye indirin ve açın hebelehübele.zip
 * Sunucuda bir keys dosyası oluşturuyoruz ~/keys .
 ```
 mkdir ~/keys
