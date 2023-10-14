@@ -59,24 +59,29 @@ chmod 600 /root/keys/my-wallet
 mkdir /root/.mina-config
 nano /root/.mina-env
 ```
-not: aşağıdakini içerisine kopyalayın ctrl x y enterla kaydedin
 
-Not: Yeni cüzdanınızın şifresini, çıkardığınız topluluk-216-password.txt dosyasında bulabilirsiniz. bu şifreyi altaki şifre yazan yere yazıcanız
-
+Not: Yeni cüzdanınızın şifresini, çıkardığınız topluluk-216-password.txt dosyasında bulabilirsiniz. bu şifreyi altaki `MINA_PRIVKEY_PASS="şifre"` yazan yere yazıcanız. ctrl x y enterla kaydet altaki kodlada üzerine yaz demeden şifresinide `MINA_LIBP2P_PASS="şifre"` buraya yazıcaksınız.
+```
+mina libp2p generate-keypair -privkey-path /root/keys/my-wallet
+```
 ---------------
 ```
 export MINA_PRIVKEY_PASS="şifre"
 LOG_LEVEL=Info
 FILE_LOG_LEVEL=Debug
-EXTRA_FLAGS=" --block-producer-key /root/keys/my-wallet"
+EXTRA_FLAGS=" --block-producer-key /root/keys/my-wallet --libp2p-keypair /root/keys/keys"
 PEER_LIST_URL=https://storage.googleapis.com/seed-lists/testworld-2-0_seeds.txt
+RAYON_NUM_THREADS=6
+MINA_LIBP2P_PASS="şifre"
 ```
 ----------
 
 ```
 cd
 ```
-
+```
+mina libp2p generate-keypair -privkey-path /root/keys/keys
+```
 ```
 docker run --name mina -d \
 -p 8302:8302 \
