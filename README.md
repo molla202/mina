@@ -54,17 +54,17 @@ docker pull gcr.io/o1labs-192920/mina-daemon:2.0.0rampup5-55b7818-focal-berkeley
 ```
 ```
 cd ~
-chmod 700 ~/keys
-chmod 600 ~/keys/my-wallet
-mkdir ~/.mina-config
-nano ~/.mina-env
+chmod 700 /root/keys
+chmod 600 /root/keys/my-wallet
+mkdir /root/.mina-config
+nano /root/.mina-env
 ```
 not: aşağıdakini içerisine kopyalayın ctrl x y enterla kaydedin
 ---------------
 export MINA_PRIVKEY_PASS="şifre"
 LOG_LEVEL=Info
 FILE_LOG_LEVEL=Debug
-EXTRA_FLAGS=" --block-producer-key ~/keys/my-wallet"
+EXTRA_FLAGS=" --block-producer-key /root/keys/my-wallet"
 PEER_LIST_URL=https://storage.googleapis.com/seed-lists/testworld-2-0_seeds.txt
 ----------
 ```
