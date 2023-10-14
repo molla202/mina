@@ -1,10 +1,10 @@
 
-
+NOT: Docker tavsiye ediliyor. dokumanı komple okuyunuz sonra başlayınız. çalışrma kısmında manuel var docker var docker deneyin daha stabil çalışıyormuş.
 ### Update & Docker kurulum ( docker kurulumu için )
 ```
 sudo apt-get update && sudo apt install jq git && sudo apt install apt-transport-https ca-certificates curl software-properties-common -y && curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add - && sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu focal stable" && sudo apt-get install docker-ce docker-ce-cli containerd.io docker-compose-plugin && sudo apt-get install docker-compose-plugin
 ```
-### Mina
+### Mina daemon
 ```
 sudo rm /etc/apt/sources.list.d/mina*.list
 echo "deb [trusted=yes] http://packages.o1test.net/ focal rampup" | sudo tee /etc/apt/sources.list.d/mina-rampup.list
@@ -39,7 +39,7 @@ chmod 600 ~/keys/my-wallet
 ```
 nano ~/keys/my-wallet.pub
 ```
-### Çalıştırma
+### Çalıştırma manuel
 
 ```
 mina daemon --peer-list-url https://storage.googleapis.com/seed-lists/testworld-2-0_seeds.txt \
@@ -60,16 +60,23 @@ mkdir /root/.mina-config
 nano /root/.mina-env
 ```
 not: aşağıdakini içerisine kopyalayın ctrl x y enterla kaydedin
+
+Not: Yeni cüzdanınızın şifresini, çıkardığınız topluluk-216-password.txt dosyasında bulabilirsiniz. bu şifreyi altaki şifre yazan yere yazıcanız
+
 ---------------
+```
 export MINA_PRIVKEY_PASS="şifre"
 LOG_LEVEL=Info
 FILE_LOG_LEVEL=Debug
 EXTRA_FLAGS=" --block-producer-key /root/keys/my-wallet"
 PEER_LIST_URL=https://storage.googleapis.com/seed-lists/testworld-2-0_seeds.txt
+```
 ----------
+
 ```
 cd
 ```
+
 ```
 docker run --name mina -d \
 -p 8302:8302 \
