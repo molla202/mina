@@ -62,7 +62,7 @@ nano /root/.mina-env
 
 Not: Yeni cüzdanınızın şifresini, çıkardığınız topluluk-216-password.txt dosyasında bulabilirsiniz. bu şifreyi altaki `MINA_PRIVKEY_PASS="şifre"` yazan yere yazıcanız. ctrl x y enterla kaydet altaki kodlada üzerine yaz demeden şifresinide `MINA_LIBP2P_PASS="şifre"` buraya yazıcaksınız.
 ```
-mina libp2p generate-keypair -privkey-path /root/keys/my-wallet
+mina libp2p generate-keypair -privkey-path /root/keys/keys
 ```
 ---------------
 ```
