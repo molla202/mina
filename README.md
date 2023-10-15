@@ -61,15 +61,14 @@ RAYON_NUM_THREADS=6
 MINA_LIBP2P_PASS="şifre"
 ```
 
-
+Not: ctrl c daha sonra :qa yazıp enter enter daha sonra :exit yaz enter
 ```
-sudo tee /usr/lib/systemd/user/mina.service > /dev/null <<EOF
+vi /usr/lib/systemd/user/mina.service
 [Unit]
 Description=Mina Daemon Service
 After=network.target
 StartLimitIntervalSec=60
 StartLimitBurst=3
-
 
 [Service]
 Environment="PEERS_LIST_URL=https://storage.googleapis.com/seed-lists/berkeley_seeds.txt"
@@ -85,7 +84,6 @@ ExecStop=/usr/local/bin/mina client stop-daemon
 
 [Install]
 WantedBy=default.target
-EOF
 ```
 ```
 chmod 600 ~/.mina-env
