@@ -40,8 +40,8 @@ nano ~/keys/my-wallet.pub
 
 
 
-Not: Yeni cüzdanınızın şifresini, çıkardığınız topluluk-216-password.txt dosyasında bulabilirsiniz. bu şifreyi altaki `MINA_PRIVKEY_PASS="şifre"` yazan yere yazıcanız. ctrl x y enterla kaydet
-* altaki kodlada olusturduğunuz şifreyi `MINA_LIBP2P_PASS="şifre"` buraya yazıcaksınız.
+Not: Yeni cüzdanınızın şifresini, çıkardığınız topluluk-216-password.txt dosyasında bulabilirsiniz. bu şifreyi altaki `MINA_PRIVKEY_PASS="şifre"` yazan yere yazıcanız. ctrl x y enterla kaydet. 
+* altaki kodlada olusturduğunuz şifreyi `MINA_LIBP2P_PASS="şifre"` buraya yazıcaksınız.yani kodu girince bir şifre sorucak mesela 12345678 dediniz he onu `MINA_LIBP2P_PASS="şifre"` buraya yazıcanız artık ne şifre koyarsanız
 * UPTIME_PRIVKEY_PASS="şifre" buraya,  burda yazdığın şifreyi yazınız MINA_PRIVKEY_PASS="şifre"
 
 ```
