@@ -110,7 +110,7 @@ mina client status
 ```
 
 ### Docker alternatif
-
+Not: şifre kısımlarına şifrelerinizi yazınız....
 
 ```
 mina libp2p generate-keypair -privkey-path /root/keys/keys
