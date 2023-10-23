@@ -13,7 +13,7 @@ echo "deb [trusted=yes] http://packages.o1test.net/ focal rampup" | sudo tee /et
 sudo apt-get update
 ```
 ```
-sudo apt-get install -y mina-berkeley=2.0.0rampup5-55b7818
+sudo apt-get install -y mina-berkeley=2.0.0rampup6-4061884
 ```
 
 
