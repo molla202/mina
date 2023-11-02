@@ -103,7 +103,7 @@ EOF
 ```
 
 systemctl --user daemon-reload
-systemctl --user restart mina
+systemctl --user restart mina.service
 systemctl --user enable mina
 sudo loginctl enable-linger
 journalctl --user-unit mina -n 1000 -f
